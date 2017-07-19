@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="container">
+
+<br>
+
+<div class="row">
+    <form class="form" action="/" method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="form-group">
+            {{ form.login.errors }}
+            <label for="login"> {{ form.login.label }} </label>
+            <input class="form-control" name="login" id="login" placeholder="{{ form.login.label }}" value="{{ form.login.value }}">
+        </div>
+        <div class="form-group">
+            {{ form.api_key.errors }}
+            <label for="api_key"> {{ form.api_key.label }} </label>
+            <input class="form-control" name="api_key" id="api_key" placeholder="{{ form.api_key.label }}" value="{{ form.api_key.value }}">
+        </div>
+        <div class="form-group">
+            {{ form.domain.errors }}
+            <label for="domain"> {{ form.domain.label }} </label>
+            <input class="form-control" name="domain" id="domain" placeholder="{{ form.domain.label }}" value="{{ form.domain.value }}">
+
+        </div>
+        <input class="btn btn-primary" type="submit" value="Сделки"/>
+    </form>
+</div>
+
+<br>
+<br>
+<br>
+
+<table class="table table-striped">
+
+    <tr>
+        <th></th>
+        <th>Май</th>
+        <th>Июнь</th>
+        <th>Июль</th>
+    </tr>
+
+    <tr>
+        <td>доход успешно реализованы  </td>
+        <td>{{ metrics.0.amount }}</td>
+        <td>{{ metrics.1.amount }}</td>
+        <td>{{ metrics.2.amount }}</td>
+    </tr>
+    <tr>
+        <td>ср. чек успешно реализованы</td>
+        <td>{{ metrics.0.avg_check }}</td>
+        <td>{{ metrics.1.avg_check }}</td>
+        <td>{{ metrics.2.avg_check }}</td>
+    </tr>
+    <tr>
+        <td>заявки успешно реализованы </td>
+        <td>{{ metrics.0.success_leads }}</td>
+        <td>{{ metrics.1.success_leads }}</td>
+        <td>{{ metrics.2.success_leads }}</td>
+    </tr>
+    <tr>
+        <td>лиды успешно реализованы   </td>
+        <td>{{ metrics.0.success_leads_users }}</td>
+        <td>{{ metrics.1.success_leads_users }}</td>
+        <td>{{ metrics.2.success_leads_users }}</td>
+    </tr>
+    <tr>
+        <td>заявки подтверждены        </td>
+        <td>{{ metrics.0.almost_success_leads }}</td>
+        <td>{{ metrics.1.almost_success_leads }}</td>
+        <td>{{ metrics.2.almost_success_leads }}</td>
+    </tr>
+    <tr>
+        <td>лиды подтверждены          </td>
+        <td>{{ metrics.0.almost_success_leads_users }}</td>
+        <td>{{ metrics.1.almost_success_leads_users }}</td>
+        <td>{{ metrics.2.almost_success_leads_users }}</td>
+    </tr>
+</table>
+
+</body>
+</html>
+
