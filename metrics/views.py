@@ -10,8 +10,8 @@ from django.shortcuts import render
 from metrics.forms import AuthForm
 
 
-STEP_DECIDE = '50' # Принимают решение
-STEP_AGREEMENT = '60' # Согласование договора
+STEP_DECIDE = '15636928' # Принимают решение
+STEP_AGREEMENT = '15636931' # Согласование договора
 STEP_SUCCESS = '142'  # Успешно реализованы
 
 APPROVED_STEPS = [STEP_DECIDE, STEP_AGREEMENT]
