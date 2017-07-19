@@ -1,17 +1,14 @@
-import calendar
 import time
 from datetime import date
 
 from django.core.exceptions import ValidationError
 from django.views.generic.edit import FormView
 
-from django.shortcuts import render
-
 from metrics.forms import AuthForm
 
 
-STEP_DECIDE = '15636928' # Принимают решение
-STEP_AGREEMENT = '15636931' # Согласование договора
+STEP_DECIDE = '15636928'  # Принимают решение
+STEP_AGREEMENT = '15636931'  # Согласование договора
 STEP_SUCCESS = '142'  # Успешно реализованы
 
 APPROVED_STEPS = [STEP_DECIDE, STEP_AGREEMENT]
@@ -19,14 +16,12 @@ APPROVED_STEPS = [STEP_DECIDE, STEP_AGREEMENT]
 class MetricsView(FormView):
     template_name = 'metrics.html'
     form_class = AuthForm
-    # success_url = '/'
 
     def form_valid(self, form):
         return super(MetricsView, self).form_valid(form)
 
 
     def post(self, request, *args, **kwargs):
-        # form = super(MetricsView, self).post(request, *args, **kwargs)
         form = self.get_form()
         if form.is_valid():
             try:
@@ -54,7 +49,6 @@ class MetricsView(FormView):
         for dt in dates:
             result.append([lead for lead in leads if
                            dt[0] <= lead['date_create'] < dt[1]])
-
         return result
 
     def month_metrics(self, leads):
@@ -102,7 +96,7 @@ class MetricsView(FormView):
         users = []
         for lead in leads:
             if lead['status_id'] == STEP_SUCCESS:
-                users.append(lead['responsible_user_id'])
+                users.append(lead['main_contact_id'])
         return len(set(users))
 
     # заявки подтверждены         | количество сделок, проходивших хотя бы одну из 2 предпоследних шагов воронки (2 шага до “Успешно реализован”)
@@ -114,19 +108,5 @@ class MetricsView(FormView):
         users = []
         for lead in leads:
             if lead['status_id'] in APPROVED_STEPS:
-                users.append(lead['responsible_user_id'])
+                users.append(lead['main_contact_id'])
         return len(set(users))
-
-
-def login_view(request):
-    login = 'vlad.korpusov@mail.ru'
-    api_key = '10ff349e1cbd8de126924b6eecfc61bd'
-    url = 'https://new596d0be6580de.amocrm.ru'
-
-    data = {
-        'USER_LOGIN' : login,
-        'USER_HASH' : api_key
-    }
-
-    requests.post(url, data)
-
